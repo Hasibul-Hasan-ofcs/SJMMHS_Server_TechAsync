@@ -7,6 +7,7 @@ const getNumberOfRooms = require("./controllers/no_of_rooms/getNumberOfRooms");
 const getNumberOfSeats = require("./controllers/no_of_seats/getNumberOfSeats");
 const colors = require("colors");
 const client = require("./mongodb_connection/mongoDBConnection");
+const getStudentInformation = require("./controllers/student_information/getStudentInformation");
 
 // initializing express app
 const app = express();
@@ -33,6 +34,9 @@ async function run() {
     app.route("/holidays").get(getHolidays);
     app.route("/no-of-rooms").get(getNumberOfRooms);
     app.route("/no-of-seats").get(getNumberOfSeats);
+
+    // {STUDENT DATA ROUTES}
+    app.route("/student-info/:value").get(getStudentInformation);
   } finally {
     console.log("reached finally block");
   }
