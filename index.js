@@ -16,6 +16,16 @@ const getComputerUsage = require("./controllers/computer_usage/getComputerUsage"
 const getPhysicalStructure = require("./controllers/physical_structure/getPhysicalStructure");
 const getPrincipal = require("./controllers/principal/getPrincipal");
 const getTeachers = require("./controllers/teachers/getTeachers");
+const getManagement = require("./controllers/management/getManagement");
+const getStaff = require("./controllers/staff/getStaff");
+const getExPrincipal = require("./controllers/ex_principal/getExPrincipal");
+const getSuccessfulStudents = require("./controllers/successful_students/getSuccessfulStudents");
+const getPhotoGallery = require("./controllers/photo_gallery/getPhotoGallery");
+const getMultimediaClassroom = require("./controllers/multimedia_classroom/getMultimediaClassroom");
+const getBlogs = require("./controllers/blogs/getBlogs");
+const getPhotoGalleryById = require("./controllers/photo_gallery/getPhotoGalleryByID");
+const getExamRoutine = require("./controllers/routine/getExamRoutine");
+const deleteStudentInformation = require("./controllers/student_information/deleteStudentInformation");
 
 // initializing express app
 const app = express();
@@ -47,14 +57,30 @@ async function run() {
     app.route("/sahapath").get(getSahapath);
     app.route("/computer-usage").get(getComputerUsage);
     app.route("/physical-structure").get(getPhysicalStructure);
+    app.route("/multimedia-classroom").get(getMultimediaClassroom);
+    app.route("/blogs").get(getBlogs);
 
     // {STUDENT DATA ROUTES}
     app.route("/student-info/:value").get(getStudentInformation);
     app.route("/result/:classvalue/:reg").get(getResults);
+    app.route("/successful-students").get(getSuccessfulStudents);
+
+    // {STUDENT DATA DELETE}
+    app.route("/student-info/:value/:id").get(deleteStudentInformation);
 
     // {AUTHORITY}
     app.route("/principal").get(getPrincipal);
+    app.route("/ex-principal").get(getExPrincipal);
     app.route("/teachers").get(getTeachers);
+    app.route("/management").get(getManagement);
+    app.route("/staff").get(getStaff);
+
+    // {GALLERY}
+    app.route("/photo-gallery").get(getPhotoGallery);
+    app.route("/photo-gallery/:id").get(getPhotoGalleryById);
+
+    // {ROUTINE}
+    app.route("/exam-routine").get(getExamRoutine);
   } finally {
     console.log("reached finally block");
   }
