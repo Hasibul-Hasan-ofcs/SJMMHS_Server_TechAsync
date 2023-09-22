@@ -10,6 +10,12 @@ const colors = require("colors");
 const client = require("./mongodb_connection/mongoDBConnection");
 const getStudentInformation = require("./controllers/student_information/getStudentInformation");
 const getResults = require("./controllers/result/getResult");
+const getCirculars = require("./controllers/circular/getCircular");
+const getSahapath = require("./controllers/sahapath/getShahapath");
+const getComputerUsage = require("./controllers/computer_usage/getComputerUsage");
+const getPhysicalStructure = require("./controllers/physical_structure/getPhysicalStructure");
+const getPrincipal = require("./controllers/principal/getPrincipal");
+const getTeachers = require("./controllers/teachers/getTeachers");
 
 // initializing express app
 const app = express();
@@ -37,12 +43,18 @@ async function run() {
     app.route("/holidays").get(getHolidays);
     app.route("/no-of-rooms").get(getNumberOfRooms);
     app.route("/no-of-seats").get(getNumberOfSeats);
-
-    // {RESULT}
-    app.route("/result/:classvalue/:reg").get(getResults);
+    app.route("/circular").get(getCirculars);
+    app.route("/sahapath").get(getSahapath);
+    app.route("/computer-usage").get(getComputerUsage);
+    app.route("/physical-structure").get(getPhysicalStructure);
 
     // {STUDENT DATA ROUTES}
     app.route("/student-info/:value").get(getStudentInformation);
+    app.route("/result/:classvalue/:reg").get(getResults);
+
+    // {AUTHORITY}
+    app.route("/principal").get(getPrincipal);
+    app.route("/teachers").get(getTeachers);
   } finally {
     console.log("reached finally block");
   }
