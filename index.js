@@ -26,6 +26,8 @@ const getBlogs = require("./controllers/blogs/getBlogs");
 const getPhotoGalleryById = require("./controllers/photo_gallery/getPhotoGalleryByID");
 const getExamRoutine = require("./controllers/routine/getExamRoutine");
 const deleteStudentInformation = require("./controllers/student_information/deleteStudentInformation");
+const editStudentInformation = require("./controllers/student_information/editStudentInformation");
+const addStudentInformation = require("./controllers/student_information/addStudentInformation");
 
 // initializing express app
 const app = express();
@@ -65,8 +67,14 @@ async function run() {
     app.route("/result/:classvalue/:reg").get(getResults);
     app.route("/successful-students").get(getSuccessfulStudents);
 
+    // {STUDENT DATA ADD}
+    app.route("/student-info/:value").post(addStudentInformation);
+
     // {STUDENT DATA DELETE}
-    app.route("/student-info/:value/:id").get(deleteStudentInformation);
+    app.route("/student-info/:value/:id").delete(deleteStudentInformation);
+
+    // {STUDENT DATA PATCH}
+    app.route("/student-info/:value/:id").patch(editStudentInformation);
 
     // {AUTHORITY}
     app.route("/principal").get(getPrincipal);
