@@ -1,6 +1,4 @@
-const client = require("../../mongodb_connection/mongoDBConnection");
-
-const BlogsCollection = client.db("main").collection("blog");
+const BlogsCollection = require("../../collections/Blogs/BlogsCollection");
 
 const getBlogs = async (req, res) => {
   const cursor = BlogsCollection.find();

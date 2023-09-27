@@ -1,6 +1,6 @@
-const client = require("../../mongodb_connection/mongoDBConnection");
-
-const managementCollection = client.db("management").collection("base");
+const {
+  managementCollection,
+} = require("../../collections/management/Management");
 
 const getManagement = async (req, res) => {
   const cursor = managementCollection.find();

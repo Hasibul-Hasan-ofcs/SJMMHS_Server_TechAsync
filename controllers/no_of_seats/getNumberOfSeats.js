@@ -1,6 +1,6 @@
-const client = require("../../mongodb_connection/mongoDBConnection");
-
-const noOfSeatsCollection = client.db("main").collection("number_of_seats");
+const {
+  noOfSeatsCollection,
+} = require("../../collections/no_of_seats/NoOfSeatsCollection");
 
 const getNumberOfSeats = async (req, res) => {
   const cursor = noOfSeatsCollection.find();

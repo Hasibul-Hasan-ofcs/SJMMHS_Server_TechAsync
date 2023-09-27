@@ -1,6 +1,4 @@
-const client = require("../../mongodb_connection/mongoDBConnection");
-
-const staffCollection = client.db("staff").collection("base");
+const staffCollection = require("../../collections/staff/StaffCollection");
 
 const getStaff = async (req, res) => {
   const cursor = staffCollection.find();

@@ -1,12 +1,12 @@
-const client = require("../../mongodb_connection/mongoDBConnection");
+const {
+  resultCollection6,
+  resultCollection7,
+  resultCollection8,
+  resultCollection9,
+  resultCollection10,
+} = require("../../collections/result/ResultCollection");
 
-const resultCollection6 = client.db("result").collection("class6");
-const resultCollection7 = client.db("result").collection("class7");
-const resultCollection8 = client.db("result").collection("class8");
-const resultCollection9 = client.db("result").collection("class9");
-const resultCollection10 = client.db("result").collection("class10");
-
-const getResults = async (req, res) => {
+const getResultById = async (req, res) => {
   const { classvalue, reg } = req.params;
   console.log(classvalue, reg);
   const query = {
@@ -29,4 +29,4 @@ const getResults = async (req, res) => {
   res.send(resultData);
 };
 
-module.exports = getResults;
+module.exports = getResultById;

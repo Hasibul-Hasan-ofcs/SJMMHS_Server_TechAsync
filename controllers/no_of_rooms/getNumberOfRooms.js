@@ -1,9 +1,9 @@
-const client = require("../../mongodb_connection/mongoDBConnection");
-
-const roomsNoCollection = client.db("main").collection("number_of_rooms");
+const {
+  NoOfRoomsCollection,
+} = require("../../collections/no_of_rooms/NoOfRoomsCollection");
 
 const getNumberOfRooms = async (req, res) => {
-  const cursor = roomsNoCollection.find();
+  const cursor = NoOfRoomsCollection.find();
   const roomsNoData = await cursor.toArray();
   console.log(roomsNoData);
   res.send(roomsNoData);

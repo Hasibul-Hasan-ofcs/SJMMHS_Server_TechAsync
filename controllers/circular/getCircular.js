@@ -1,6 +1,6 @@
-const client = require("../../mongodb_connection/mongoDBConnection");
-
-const circularCollection = client.db("main").collection("circular");
+const {
+  circularCollection,
+} = require("../../collections/circular/CircularCollection");
 
 const getCirculars = async (req, res) => {
   const cursor = circularCollection.find();

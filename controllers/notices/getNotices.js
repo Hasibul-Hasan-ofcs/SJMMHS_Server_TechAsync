@@ -1,6 +1,6 @@
-const client = require("../../mongodb_connection/mongoDBConnection");
-
-const noticeCollection = client.db("main").collection("notice");
+const {
+  noticeCollection,
+} = require("../../collections/notices/NoticeCollection");
 
 const getNotices = async (req, res) => {
   const cursor = noticeCollection.find();

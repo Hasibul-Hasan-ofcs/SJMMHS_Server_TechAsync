@@ -1,8 +1,4 @@
-const client = require("../../mongodb_connection/mongoDBConnection");
-
-const successfulStudentsCollection = client
-  .db("students")
-  .collection("successful_students");
+const successfulStudentsCollection = require("../../collections/successful_students/SuccessfulStudents");
 
 const getSuccessfulStudents = async (req, res) => {
   const cursor = successfulStudentsCollection.find();
