@@ -48,6 +48,10 @@ const addSuccessfulStudents = require("./controllers/successful_students/addSucc
 const deleteSuccessfulStudents = require("./controllers/successful_students/deleteSuccessfulStudents");
 const addBlogs = require("./controllers/blogs/addBlogs");
 const deleteBlogs = require("./controllers/blogs/deleteBlogs");
+const getResult = require("./controllers/result/getResult");
+const addResult = require("./controllers/result/addResult");
+const deleteResult = require("./controllers/result/deleteResult");
+const editResult = require("./controllers/result/editResult");
 
 // initializing express app
 const app = express();
@@ -83,7 +87,7 @@ async function run() {
 
     // {BLOGS}
     app.route("/blogs").get(getBlogs).post(addBlogs);
-    app.route("/blogs").delete(deleteBlogs);
+    app.route("/blogs/:id").delete(deleteBlogs);
 
     // {HOLIDAYS}
     app.route("/holidays").get(getHolidays).post(addHolidays);
@@ -103,7 +107,12 @@ async function run() {
 
     // {STUDENT DATA ROUTES}
     app.route("/student-info/:value").get(getStudentInformation);
+
+    // {RESULT}
     app.route("/result/:classvalue/:reg").get(getResultById);
+    app.route("/result/:value").get(getResult).post(addResult);
+    app.route("/result/:value/:id").delete(deleteResult);
+    app.route("/result/:value/:id").patch(editResult);
 
     // {SUCCESSFUL STUDENTS}
     app
