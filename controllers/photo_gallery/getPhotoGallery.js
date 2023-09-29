@@ -1,6 +1,4 @@
-const client = require("../../mongodb_connection/mongoDBConnection");
-
-const photoCollection = client.db("main").collection("images");
+const photoCollection = require("../../collections/photos/PhotosCollection");
 
 const getPhotoGallery = async (req, res) => {
   const cursor = photoCollection.find();

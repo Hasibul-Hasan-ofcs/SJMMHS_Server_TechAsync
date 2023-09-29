@@ -1,9 +1,7 @@
-const client = require("../../mongodb_connection/mongoDBConnection");
-
-const routineCollection = client.db("routine").collection("examroutine");
+const examRoutineCollection = require("../../collections/exam_routine/ExamRoutineCollection");
 
 const getExamRoutine = async (req, res) => {
-  const cursor = routineCollection.find();
+  const cursor = examRoutineCollection.find();
   const routineData = await cursor.toArray();
   console.log(routineData);
   res.send(routineData);

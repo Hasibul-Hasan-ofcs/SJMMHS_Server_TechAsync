@@ -1,7 +1,5 @@
 const { ObjectId } = require("mongodb");
-const client = require("../../mongodb_connection/mongoDBConnection");
-
-const photoCollection = client.db("main").collection("images");
+const photoCollection = require("../../collections/photos/PhotosCollection");
 
 const getPhotoGalleryById = async (req, res) => {
   const id = req.params.id;

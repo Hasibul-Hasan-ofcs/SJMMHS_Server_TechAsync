@@ -1,6 +1,4 @@
-const client = require("../../mongodb_connection/mongoDBConnection");
-
-const principalCollection = client.db("teachers").collection("principal");
+const principalCollection = require("../../collections/principal/PrincipalCollection");
 
 const getPrincipal = async (req, res) => {
   const cursor = principalCollection.find();

@@ -52,6 +52,14 @@ const getResult = require("./controllers/result/getResult");
 const addResult = require("./controllers/result/addResult");
 const deleteResult = require("./controllers/result/deleteResult");
 const editResult = require("./controllers/result/editResult");
+const deletePhotoData = require("./controllers/photo_gallery/deletePhotoData");
+const addPhotoData = require("./controllers/photo_gallery/addPhotoData");
+const editExamRoutine = require("./controllers/routine/EditExamRoutine");
+const getVideos = require("./controllers/videos/getVideos");
+const deleteVideo = require("./controllers/videos/deleteVideo");
+const addVideoData = require("./controllers/videos/addVideo");
+const editPrincipal = require("./controllers/principal/editPrincipal");
+const editExPrincipal = require("./controllers/ex_principal/editExPrincipal");
 
 // initializing express app
 const app = express();
@@ -104,10 +112,6 @@ async function run() {
     // {NO OF SEATS}
     app.route("/no-of-seats").get(getNumberOfSeats).post(addNoOfSeats);
     app.route("/no-of-seats/:id").delete(deleteNoOfSeats);
-
-    // {STUDENT DATA ROUTES}
-    app.route("/student-info/:value").get(getStudentInformation);
-
     // {RESULT}
     app.route("/result/:classvalue/:reg").get(getResultById);
     app.route("/result/:value").get(getResult).post(addResult);
@@ -121,18 +125,22 @@ async function run() {
       .post(addSuccessfulStudents);
     app.route("/successful-students/:id").delete(deleteSuccessfulStudents);
 
-    // {STUDENT DATA ADD}
-    app.route("/student-info/:value").post(addStudentInformation);
-
-    // {STUDENT DATA DELETE}
-    app.route("/student-info/:value/:id").delete(deleteStudentInformation);
-
-    // {STUDENT DATA PATCH}
-    app.route("/student-info/:value/:id").patch(editStudentInformation);
+    // {STUDENT DATA ROUTES}
+    app
+      .route("/student-info/:value")
+      .get(getStudentInformation)
+      .post(addStudentInformation);
+    app
+      .route("/student-info/:value/:id")
+      .delete(deleteStudentInformation)
+      .patch(editStudentInformation);
 
     // {AUTHORITY}
     app.route("/principal").get(getPrincipal);
+    app.route("/principal/:id").patch(editPrincipal);
+
     app.route("/ex-principal").get(getExPrincipal);
+    app.route("/ex-principal/:id").patch(editExPrincipal);
 
     // {TEACHERS}
     app.route("/teachers").get(getTeachers).post(addTeachers);
@@ -147,11 +155,18 @@ async function run() {
     app.route("/staff/:id").delete(deleteStaff);
 
     // {GALLERY}
-    app.route("/photo-gallery").get(getPhotoGallery);
-    app.route("/photo-gallery/:id").get(getPhotoGalleryById);
+    app.route("/photo-gallery").get(getPhotoGallery).post(addPhotoData);
+    app
+      .route("/photo-gallery/:id")
+      .get(getPhotoGalleryById)
+      .delete(deletePhotoData);
+
+    app.route("/video-gallery").get(getVideos).post(addVideoData);
+    app.route("/video-gallery/:id").delete(deleteVideo);
 
     // {ROUTINE}
     app.route("/exam-routine").get(getExamRoutine);
+    app.route("/exam-routine/:id").patch(editExamRoutine);
   } finally {
     console.log("reached finally block");
   }
