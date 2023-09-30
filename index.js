@@ -60,6 +60,8 @@ const deleteVideo = require("./controllers/videos/deleteVideo");
 const addVideoData = require("./controllers/videos/addVideo");
 const editPrincipal = require("./controllers/principal/editPrincipal");
 const editExPrincipal = require("./controllers/ex_principal/editExPrincipal");
+const createJWT = require("./jwt/createJWT");
+const verifyJWT = require("./jwt/verifyJWT");
 
 // initializing express app
 const app = express();
@@ -79,14 +81,19 @@ async function run() {
     );
 
     // route definition
+
+    // {JSON WEB TOKEN}
+    app.route("/jwt").post(createJWT);
+
     // {BASE ROUTE}
     app.route("/").get(base);
 
     // {SCHOOL RELATED ROUTES}
 
     // {NOTICES}
-    app.route("/notices").get(getNotices).post(addNotice);
-    app.route("/notices/:id").delete(deleteNotice);
+    app.get("/notices", getNotices);
+    app.post("/notices", verifyJWT, addNotice);
+    app.delete("/notices/:id", verifyJWT, deleteNotice);
 
     app.route("/sahapath").get(getSahapath);
     app.route("/computer-usage").get(getComputerUsage);
@@ -94,79 +101,83 @@ async function run() {
     app.route("/multimedia-classroom").get(getMultimediaClassroom);
 
     // {BLOGS}
-    app.route("/blogs").get(getBlogs).post(addBlogs);
-    app.route("/blogs/:id").delete(deleteBlogs);
+    app.route("/blogs").get(getBlogs);
+    app.post("/blogs", verifyJWT, addBlogs);
+    app.delete("/blogs/:id", verifyJWT, deleteBlogs);
 
     // {HOLIDAYS}
-    app.route("/holidays").get(getHolidays).post(addHolidays);
-    app.route("/holidays/:id").delete(deleteHolidays);
+    app.route("/holidays").get(getHolidays);
+    app.post("/holidays", verifyJWT, addHolidays);
+    app.delete("/holidays/:id", verifyJWT, deleteHolidays);
 
     // {CIRCULAR}
-    app.route("/circular").get(getCirculars).post(addCircular);
-    app.route("/circular/:id").delete(deleteCircular);
+    app.route("/circular").get(getCirculars);
+    app.post("/circular", verifyJWT, addCircular);
+    app.delete("/circular/:id", verifyJWT, deleteCircular);
 
     // {No OF ROOMS}
-    app.route("/no-of-rooms").get(getNumberOfRooms).post(addNumberOfRooms);
-    app.route("/no-of-rooms/:id").delete(deleteNumberOfRooms);
+    app.route("/no-of-rooms").get(getNumberOfRooms);
+    app.post("/no-of-rooms", verifyJWT, addNumberOfRooms);
+    app.delete("/no-of-rooms/:id", verifyJWT, deleteNumberOfRooms);
 
     // {NO OF SEATS}
-    app.route("/no-of-seats").get(getNumberOfSeats).post(addNoOfSeats);
-    app.route("/no-of-seats/:id").delete(deleteNoOfSeats);
+    app.route("/no-of-seats").get(getNumberOfSeats);
+    app.post("/no-of-seats", verifyJWT, addNoOfSeats);
+    app.delete("/no-of-seats/:id", verifyJWT, deleteNoOfSeats);
+
     // {RESULT}
     app.route("/result/:classvalue/:reg").get(getResultById);
-    app.route("/result/:value").get(getResult).post(addResult);
-    app.route("/result/:value/:id").delete(deleteResult);
-    app.route("/result/:value/:id").patch(editResult);
+    app.route("/result/:value").get(getResult);
+    app.post("/result/:value", verifyJWT, addResult);
+    app.delete("/result/:value/:id", verifyJWT, deleteResult);
+    app.patch("/result/:value/:id", verifyJWT, editResult);
 
     // {SUCCESSFUL STUDENTS}
-    app
-      .route("/successful-students")
-      .get(getSuccessfulStudents)
-      .post(addSuccessfulStudents);
-    app.route("/successful-students/:id").delete(deleteSuccessfulStudents);
+    app.route("/successful-students").get(getSuccessfulStudents);
+    app.post("/successful-students", verifyJWT, addSuccessfulStudents);
+    app.delete("/successful-students/:id", verifyJWT, deleteSuccessfulStudents);
 
     // {STUDENT DATA ROUTES}
-    app
-      .route("/student-info/:value")
-      .get(getStudentInformation)
-      .post(addStudentInformation);
-    app
-      .route("/student-info/:value/:id")
-      .delete(deleteStudentInformation)
-      .patch(editStudentInformation);
+    app.route("/student-info/:value").get(getStudentInformation);
+    app.post("/student-info/:value", verifyJWT, addStudentInformation);
+    app.delete("/student-info/:value/:id", verifyJWT, deleteStudentInformation);
+    app.patch("/student-info/:value/:id", verifyJWT, editStudentInformation);
 
     // {AUTHORITY}
     app.route("/principal").get(getPrincipal);
-    app.route("/principal/:id").patch(editPrincipal);
+    app.patch("/principal/:id", verifyJWT, editPrincipal);
 
     app.route("/ex-principal").get(getExPrincipal);
-    app.route("/ex-principal/:id").patch(editExPrincipal);
+    app.patch("/ex-principal/:id", verifyJWT, editExPrincipal);
 
     // {TEACHERS}
-    app.route("/teachers").get(getTeachers).post(addTeachers);
-    app.route("/teachers/:id").delete(deleteTeachers);
+    app.route("/teachers").get(getTeachers);
+    app.post("/teachers", verifyJWT, addTeachers);
+    app.delete("/teachers/:id", verifyJWT, deleteTeachers);
 
     // {MANAGEMENT}
-    app.route("/management").get(getManagement).post(addManagement);
-    app.route("/management/:id").delete(deleteManagement);
+    app.route("/management").get(getManagement);
+    app.post("/management", verifyJWT, addManagement);
+    app.delete("/management/:id", verifyJWT, deleteManagement);
 
     // {STAFFS}
-    app.route("/staff").get(getStaff).post(addStaff);
-    app.route("/staff/:id").delete(deleteStaff);
+    app.route("/staff").get(getStaff);
+    app.post("/staff", verifyJWT, addStaff);
+    app.delete("/staff/:id", verifyJWT, deleteStaff);
 
     // {GALLERY}
-    app.route("/photo-gallery").get(getPhotoGallery).post(addPhotoData);
-    app
-      .route("/photo-gallery/:id")
-      .get(getPhotoGalleryById)
-      .delete(deletePhotoData);
+    app.route("/photo-gallery").get(getPhotoGallery);
+    app.post("/photo-gallery", verifyJWT, addPhotoData);
+    app.route("/photo-gallery/:id").get(getPhotoGalleryById);
+    app.delete("/photo-gallery/:id", verifyJWT, deletePhotoData);
 
-    app.route("/video-gallery").get(getVideos).post(addVideoData);
-    app.route("/video-gallery/:id").delete(deleteVideo);
+    app.route("/video-gallery").get(getVideos);
+    app.post("/video-gallery", verifyJWT, addVideoData);
+    app.delete("/video-gallery/:id", verifyJWT, deleteVideo);
 
     // {ROUTINE}
     app.route("/exam-routine").get(getExamRoutine);
-    app.route("/exam-routine/:id").patch(editExamRoutine);
+    app.patch("/exam-routine/:id", verifyJWT, editExamRoutine);
   } finally {
     console.log("reached finally block");
   }
