@@ -3,5 +3,5 @@
 ### Base URL
 
 ```
-http://localhost:5000
+https://sjmmhs-server-techasync.vercel.app
 ```
